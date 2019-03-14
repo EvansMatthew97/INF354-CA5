@@ -1,0 +1,34 @@
+<h1>Products</h1>
+
+<h2>Add product</h2>
+<form (submit)="addProduct()" [formGroup]="formGroup">
+  <label>
+    Name
+    <input type="text" formControlName="name" appValidatedInput [formGroup]="formGroup" />
+  </label>
+  <label>
+    Price
+    <input type="number" min="0" formControlName="price" appValidatedInput [formGroup]="formGroup" />
+  </label>
+  <label>
+    Category
+    <select formControlName="category" appValidatedInput [formGroup]="formGroup">
+      <option *ngFor="let category of categories" [value]="category.id">{{ category.name }}</option>
+    </select>
+  </label>
+  <label>
+    Supplier
+    <select formControlName="supplier" appValidatedInput [formGroup]="formGroup">
+      <option *ngFor="let supplier of suppliers" [value]="supplier.id">{{ supplier.name }}</option>
+    </select>
+  </label>
+  <button type="submit" [disabled]="!formGroup.valid">Add</button>
+</form>
+
+<div class="products">
+  <div class="product" *ngFor="let product of products$ | async">
+    <h3>{{ product.name }}</h3>
+    <p>{{ product.price | currency:'R' }}</p>
+    <p>Under <b>{{ product.category.name }}</b> supplied by <b>{{ product.supplier.name }}</b></p>
+  </div>
+</div>
